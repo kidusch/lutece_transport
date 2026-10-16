@@ -19,6 +19,37 @@ from lutece_transport import logic as L
 WEEKDAY_NAMES = {name.lower(): i for i, name in enumerate(L.WEEKDAY_LABELS)}
 
 
+def repair_scheduler(apply=0):
+	"""Diagnose (and with apply=1, fix) scheduled jobs that never run because their
+	creation / last_execution timestamps are in the future (clock or time zone changed
+	after install). Prints what it finds."""
+	from frappe.utils import add_to_date, now_datetime
+
+	now = now_datetime()
+	tz = frappe.db.get_single_value("System Settings", "time_zone")
+	db_now = frappe.db.sql("select now()")[0][0]
+	jobs = frappe.get_all("Scheduled Job Type", filters={"stopped": 0},
+						  fields=["name", "creation", "last_execution", "frequency", "cron_format"])
+	future = [j for j in jobs if (j.last_execution or j.creation) > now]
+	never = [j for j in jobs if not j.last_execution]
+	print(f"System time zone: {tz} | Frappe now: {now} | database now: {db_now}")
+	print(f"Active job types: {len(jobs)} | never run: {len(never)} | timestamp in the future: {len(future)}")
+	for j in future[:5]:
+		print(f"  e.g. {j.name}: creation {j.creation}, last run {j.last_execution}")
+	if future:
+		print(f"  latest future timestamp: {max((j.last_execution or j.creation) for j in future)}")
+
+	if int(apply):
+		reset_to = add_to_date(now, minutes=-10)
+		for j in future + [j for j in never if j not in future]:
+			frappe.db.set_value("Scheduled Job Type", j.name, "last_execution", reset_to, update_modified=False)
+		frappe.db.commit()
+		print(f"Reset {len(set(j.name for j in future + never))} job(s) to last run {reset_to}. "
+			  "Frequent jobs will start within a few minutes; daily ones at their normal time.")
+	elif future or never:
+		print("Run again with --kwargs \"{'apply': 1}\" to fix.")
+
+
 def make_holiday_list(name, from_date, to_date, ranges=None, country=None, weekly_off=None, replace=0):
 	"""Create (or add to) a Holiday List.
 
