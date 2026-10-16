@@ -23,7 +23,6 @@ Driver {0} is on approved leave on {1}.,Le chauffeur {0} est en congé approuvé
 Driver {0} unavailable: {1}. Please reassign.,Chauffeur {0} indisponible : {1}. Merci de réaffecter.
 Driver {0}'s licence expired on {1}.,Le permis du chauffeur {0} a expiré le {1}.
 Driver {0}'s medical check was due on {1}.,La visite médicale du chauffeur {0} était due le {1}.
-"Drivers, vehicles & setup","Chauffeurs, véhicules et paramétrage"
 Drop-off Address,Adresse de dépose
 End time must be after start time.,L'heure de fin doit être après l'heure de début.
 Ends At,Se termine à
@@ -139,3 +138,5 @@ warning,avertissement
 {0} planned tour(s) updated.,{0} tournée(s) prévue(s) mise(s) à jour.
 "{0} tour(s) created, {1} updated.","{0} tournée(s) créée(s), {1} mise(s) à jour."
 {0}'s contract does not cover {1}.,Le contrat de {0} ne couvre pas le {1}.
+"Drivers, vehicles and setup","Chauffeurs, véhicules et paramétrage"
+Passenger Name,Nom du passager

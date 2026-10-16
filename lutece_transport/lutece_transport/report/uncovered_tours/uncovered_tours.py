@@ -7,6 +7,9 @@ def execute(filters=None):
 	filters = filters or {}
 	data = uncovered_tours(filters.get("from_date"), filters.get("to_date"),
 						   include_warnings=bool(filters.get("include_warnings")))
+	for row in data:
+		if row.get("direction"):
+			row["direction"] = _(row["direction"])
 	columns = [
 		{"fieldname": "tour_date", "label": _("Date"), "fieldtype": "Date", "width": 100},
 		{"fieldname": "start_time", "label": _("Start Time"), "fieldtype": "Data", "width": 70},
