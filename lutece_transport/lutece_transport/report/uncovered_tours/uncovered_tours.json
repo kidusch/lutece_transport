@@ -1,0 +1,26 @@
+{
+ "doctype": "Report",
+ "name": "Uncovered Tours",
+ "report_name": "Uncovered Tours",
+ "ref_doctype": "Tour",
+ "report_type": "Script Report",
+ "is_standard": "Yes",
+ "module": "Lutece Transport",
+ "disabled": 0,
+ "prepared_report": 0,
+ "add_total_row": 0,
+ "owner": "Administrator",
+ "creation": "2026-10-16 21:00:00.000000",
+ "modified": "2026-10-16 21:00:00.000000",
+ "modified_by": "Administrator",
+ "roles": [
+  {
+   "role": "Transport Dispatcher"
+  },
+  {
+   "role": "System Manager"
+  }
+ ],
+ "columns": [],
+ "filters": []
+}

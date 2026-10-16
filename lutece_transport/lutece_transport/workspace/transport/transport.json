@@ -1,0 +1,103 @@
+{
+ "doctype": "Workspace",
+ "name": "Transport",
+ "label": "Transport",
+ "title": "Transport",
+ "module": "Lutece Transport",
+ "public": 1,
+ "is_hidden": 0,
+ "icon": "map",
+ "sequence_id": 30.0,
+ "owner": "Administrator",
+ "creation": "2026-10-16 21:00:00.000000",
+ "modified": "2026-10-16 21:00:00.000000",
+ "modified_by": "Administrator",
+ "content": "[{\"id\": \"hdr1\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Coverage checks</b></span>\", \"col\": 12}}, {\"id\": \"sc0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Uncovered Tours\", \"col\": 3}}, {\"id\": \"sc1\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Passengers Without Transport\", \"col\": 3}}, {\"id\": \"hdr2\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Planning</b></span>\", \"col\": 12}}, {\"id\": \"sc2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Tour\", \"col\": 3}}, {\"id\": \"sc3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Tour Template\", \"col\": 3}}, {\"id\": \"sc4\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Passenger\", \"col\": 3}}, {\"id\": \"sc5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Transport School\", \"col\": 3}}, {\"id\": \"hdr3\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Drivers, vehicles &amp; setup</b></span>\", \"col\": 12}}, {\"id\": \"sc6\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Employee\", \"col\": 3}}, {\"id\": \"sc7\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Vehicle\", \"col\": 3}}, {\"id\": \"sc8\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Leave Application\", \"col\": 3}}, {\"id\": \"sc9\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Transport Settings\", \"col\": 3}}]",
+ "shortcuts": [
+  {
+   "type": "Report",
+   "link_to": "Uncovered Tours",
+   "label": "Uncovered Tours",
+   "color": "Red",
+   "doc_view": "",
+   "report_ref_doctype": "Tour"
+  },
+  {
+   "type": "Report",
+   "link_to": "Passengers Without Transport",
+   "label": "Passengers Without Transport",
+   "color": "Red",
+   "doc_view": "",
+   "report_ref_doctype": "Passenger"
+  },
+  {
+   "type": "DocType",
+   "link_to": "Tour",
+   "label": "Tour",
+   "color": "Blue",
+   "doc_view": "Calendar"
+  },
+  {
+   "type": "DocType",
+   "link_to": "Tour Template",
+   "label": "Tour Template",
+   "color": "Grey",
+   "doc_view": "List"
+  },
+  {
+   "type": "DocType",
+   "link_to": "Passenger",
+   "label": "Passenger",
+   "color": "Grey",
+   "doc_view": "List"
+  },
+  {
+   "type": "DocType",
+   "link_to": "Transport School",
+   "label": "Transport School",
+   "color": "Grey",
+   "doc_view": "List"
+  },
+  {
+   "type": "DocType",
+   "link_to": "Employee",
+   "label": "Employee",
+   "color": "Grey",
+   "doc_view": "List"
+  },
+  {
+   "type": "DocType",
+   "link_to": "Vehicle",
+   "label": "Vehicle",
+   "color": "Grey",
+   "doc_view": "List"
+  },
+  {
+   "type": "DocType",
+   "link_to": "Leave Application",
+   "label": "Leave Application",
+   "color": "Grey",
+   "doc_view": "List"
+  },
+  {
+   "type": "DocType",
+   "link_to": "Transport Settings",
+   "label": "Transport Settings",
+   "color": "Grey",
+   "doc_view": "List"
+  }
+ ],
+ "links": [],
+ "charts": [],
+ "number_cards": [],
+ "quick_lists": [],
+ "custom_blocks": [],
+ "roles": [
+  {
+   "role": "Transport Dispatcher"
+  },
+  {
+   "role": "System Manager"
+  }
+ ]
+}

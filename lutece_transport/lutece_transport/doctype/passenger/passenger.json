@@ -1,0 +1,223 @@
+{
+ "doctype": "DocType",
+ "name": "Passenger",
+ "module": "Lutece Transport",
+ "owner": "Administrator",
+ "creation": "2026-10-16 21:00:00.000000",
+ "modified": "2026-10-16 21:00:00.000000",
+ "modified_by": "Administrator",
+ "custom": 0,
+ "engine": "InnoDB",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "fields": [
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "First Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Last Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "label": "Full Name",
+   "read_only": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "birth_date",
+   "fieldtype": "Date",
+   "label": "Birth Date"
+  },
+  {
+   "fieldname": "is_adult",
+   "fieldtype": "Check",
+   "label": "Adult"
+  },
+  {
+   "fieldname": "photo",
+   "fieldtype": "Attach Image",
+   "label": "Photo"
+  },
+  {
+   "fieldname": "col1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "school",
+   "fieldtype": "Link",
+   "label": "School",
+   "options": "Transport School",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Billed Customer",
+   "options": "Customer",
+   "description": "Who receives the invoices (family, commune, institution)"
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Data",
+   "label": "Category"
+  },
+  {
+   "fieldname": "wheelchair",
+   "fieldtype": "Check",
+   "label": "Needs Wheelchair-Accessible Vehicle"
+  },
+  {
+   "fieldname": "contract_section",
+   "fieldtype": "Section Break",
+   "label": "Contract"
+  },
+  {
+   "fieldname": "contract_start",
+   "fieldtype": "Date",
+   "label": "Transport Start",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "contract_end",
+   "fieldtype": "Date",
+   "label": "Transport End",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "col2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "label": "Price"
+  },
+  {
+   "fieldname": "address_section",
+   "fieldtype": "Section Break",
+   "label": "Home Address"
+  },
+  {
+   "fieldname": "home_address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "postal_code",
+   "fieldtype": "Data",
+   "label": "Postal Code"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City"
+  },
+  {
+   "fieldname": "schedule_section",
+   "fieldtype": "Section Break",
+   "label": "Required Trips",
+   "description": "One row per trip the passenger needs. A child who goes home at noon and back at 13:30 has two To School and two From School rows for that day. This is what the Passengers Without Transport check compares against."
+  },
+  {
+   "fieldname": "schedule",
+   "fieldtype": "Table",
+   "label": "Required Trips",
+   "options": "Passenger Schedule"
+  },
+  {
+   "fieldname": "guardians_section",
+   "fieldtype": "Section Break",
+   "label": "Guardians"
+  },
+  {
+   "fieldname": "guardians",
+   "fieldtype": "Table",
+   "label": "Guardians",
+   "options": "Passenger Guardian"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "field_order": [
+  "first_name",
+  "last_name",
+  "full_name",
+  "birth_date",
+  "is_adult",
+  "photo",
+  "col1",
+  "school",
+  "customer",
+  "category",
+  "wheelchair",
+  "contract_section",
+  "contract_start",
+  "contract_end",
+  "col2",
+  "price",
+  "address_section",
+  "home_address",
+  "postal_code",
+  "city",
+  "schedule_section",
+  "schedule",
+  "guardians_section",
+  "guardians",
+  "remarks"
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Transport Dispatcher",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Transport Driver",
+   "read": 1,
+   "print": 1,
+   "report": 1
+  }
+ ],
+ "states": [],
+ "links": [],
+ "actions": [],
+ "autoname": "format:PAS-{#####}",
+ "naming_rule": "Expression",
+ "title_field": "full_name",
+ "show_title_field_in_link": 1,
+ "search_fields": "full_name,school",
+ "image_field": "photo"
+}

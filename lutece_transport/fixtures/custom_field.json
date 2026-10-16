@@ -1,0 +1,120 @@
+[
+ {
+  "doctype": "Custom Field",
+  "name": "Employee-custom_driver_section",
+  "dt": "Employee",
+  "fieldname": "custom_driver_section",
+  "label": "Driver",
+  "fieldtype": "Section Break",
+  "insert_after": "date_of_joining",
+  "module": "Lutece Transport",
+  "modified": "2026-10-16 21:00:00.000000",
+  "collapsible": 1
+ },
+ {
+  "doctype": "Custom Field",
+  "name": "Employee-custom_is_driver",
+  "dt": "Employee",
+  "fieldname": "custom_is_driver",
+  "label": "Is Driver",
+  "fieldtype": "Check",
+  "insert_after": "custom_driver_section",
+  "module": "Lutece Transport",
+  "modified": "2026-10-16 21:00:00.000000",
+  "in_standard_filter": 1
+ },
+ {
+  "doctype": "Custom Field",
+  "name": "Employee-custom_licence_valid_until",
+  "dt": "Employee",
+  "fieldname": "custom_licence_valid_until",
+  "label": "Licence Valid Until",
+  "fieldtype": "Date",
+  "insert_after": "custom_is_driver",
+  "module": "Lutece Transport",
+  "modified": "2026-10-16 21:00:00.000000",
+  "depends_on": "custom_is_driver"
+ },
+ {
+  "doctype": "Custom Field",
+  "name": "Employee-custom_driver_column",
+  "dt": "Employee",
+  "fieldname": "custom_driver_column",
+  "label": "",
+  "fieldtype": "Column Break",
+  "insert_after": "custom_licence_valid_until",
+  "module": "Lutece Transport",
+  "modified": "2026-10-16 21:00:00.000000"
+ },
+ {
+  "doctype": "Custom Field",
+  "name": "Employee-custom_last_medical_check",
+  "dt": "Employee",
+  "fieldname": "custom_last_medical_check",
+  "label": "Last Medical Check",
+  "fieldtype": "Date",
+  "insert_after": "custom_driver_column",
+  "module": "Lutece Transport",
+  "modified": "2026-10-16 21:00:00.000000",
+  "depends_on": "custom_is_driver"
+ },
+ {
+  "doctype": "Custom Field",
+  "name": "Employee-custom_next_medical_check",
+  "dt": "Employee",
+  "fieldname": "custom_next_medical_check",
+  "label": "Next Medical Check",
+  "fieldtype": "Date",
+  "insert_after": "custom_last_medical_check",
+  "module": "Lutece Transport",
+  "modified": "2026-10-16 21:00:00.000000",
+  "depends_on": "custom_is_driver"
+ },
+ {
+  "doctype": "Custom Field",
+  "name": "Vehicle-custom_seats",
+  "dt": "Vehicle",
+  "fieldname": "custom_seats",
+  "label": "Passenger Seats",
+  "fieldtype": "Int",
+  "insert_after": "model",
+  "module": "Lutece Transport",
+  "modified": "2026-10-16 21:00:00.000000",
+  "reqd": 0,
+  "in_list_view": 1
+ },
+ {
+  "doctype": "Custom Field",
+  "name": "Vehicle-custom_wheelchair_accessible",
+  "dt": "Vehicle",
+  "fieldname": "custom_wheelchair_accessible",
+  "label": "Wheelchair Accessible",
+  "fieldtype": "Check",
+  "insert_after": "custom_seats",
+  "module": "Lutece Transport",
+  "modified": "2026-10-16 21:00:00.000000",
+  "in_standard_filter": 1
+ },
+ {
+  "doctype": "Custom Field",
+  "name": "Vehicle-custom_bus_lane_permit",
+  "dt": "Vehicle",
+  "fieldname": "custom_bus_lane_permit",
+  "label": "Bus Lane Permit",
+  "fieldtype": "Check",
+  "insert_after": "custom_wheelchair_accessible",
+  "module": "Lutece Transport",
+  "modified": "2026-10-16 21:00:00.000000"
+ },
+ {
+  "doctype": "Custom Field",
+  "name": "Vehicle-custom_next_inspection",
+  "dt": "Vehicle",
+  "fieldname": "custom_next_inspection",
+  "label": "Next Technical Inspection",
+  "fieldtype": "Date",
+  "insert_after": "custom_bus_lane_permit",
+  "module": "Lutece Transport",
+  "modified": "2026-10-16 21:00:00.000000"
+ }
+]

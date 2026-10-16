@@ -1,0 +1,62 @@
+{
+ "doctype": "DocType",
+ "name": "Tour Template Passenger",
+ "module": "Lutece Transport",
+ "owner": "Administrator",
+ "creation": "2026-10-16 21:00:00.000000",
+ "modified": "2026-10-16 21:00:00.000000",
+ "modified_by": "Administrator",
+ "custom": 0,
+ "engine": "InnoDB",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 0,
+ "fields": [
+  {
+   "fieldname": "passenger",
+   "fieldtype": "Link",
+   "label": "Passenger",
+   "options": "Passenger",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "passenger_name",
+   "fieldtype": "Data",
+   "label": "Name",
+   "fetch_from": "passenger.full_name",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "pickup_time",
+   "fieldtype": "Time",
+   "label": "Pickup Time",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "pickup_address",
+   "fieldtype": "Small Text",
+   "label": "Pickup Address",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "dropoff_address",
+   "fieldtype": "Small Text",
+   "label": "Drop-off Address"
+  }
+ ],
+ "field_order": [
+  "passenger",
+  "passenger_name",
+  "pickup_time",
+  "pickup_address",
+  "dropoff_address"
+ ],
+ "permissions": [],
+ "states": [],
+ "links": [],
+ "actions": [],
+ "istable": 1,
+ "editable_grid": 1
+}

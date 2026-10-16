@@ -1,0 +1,62 @@
+{
+ "doctype": "DocType",
+ "name": "Passenger Guardian",
+ "module": "Lutece Transport",
+ "owner": "Administrator",
+ "creation": "2026-10-16 21:00:00.000000",
+ "modified": "2026-10-16 21:00:00.000000",
+ "modified_by": "Administrator",
+ "custom": 0,
+ "engine": "InnoDB",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 0,
+ "fields": [
+  {
+   "fieldname": "guardian_name",
+   "fieldtype": "Data",
+   "label": "Name",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "relation",
+   "fieldtype": "Data",
+   "label": "Relation",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone",
+   "options": "Phone",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "contact",
+   "fieldtype": "Link",
+   "label": "Contact",
+   "options": "Contact"
+  }
+ ],
+ "field_order": [
+  "guardian_name",
+  "relation",
+  "phone",
+  "email",
+  "contact"
+ ],
+ "permissions": [],
+ "states": [],
+ "links": [],
+ "actions": [],
+ "istable": 1,
+ "editable_grid": 1
+}

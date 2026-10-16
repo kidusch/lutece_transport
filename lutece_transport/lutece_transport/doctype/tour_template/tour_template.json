@@ -1,0 +1,250 @@
+{
+ "doctype": "DocType",
+ "name": "Tour Template",
+ "module": "Lutece Transport",
+ "owner": "Administrator",
+ "creation": "2026-10-16 21:00:00.000000",
+ "modified": "2026-10-16 21:00:00.000000",
+ "modified_by": "Administrator",
+ "custom": 0,
+ "engine": "InnoDB",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "fields": [
+  {
+   "fieldname": "template_name",
+   "fieldtype": "Data",
+   "label": "Tour Name",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "description": "e.g. Morning Lancy – École des Palettes"
+  },
+  {
+   "fieldname": "school",
+   "fieldtype": "Link",
+   "label": "School",
+   "options": "Transport School",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "direction",
+   "fieldtype": "Select",
+   "label": "Direction",
+   "options": "To School\nFrom School",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Active",
+   "default": "1"
+  },
+  {
+   "fieldname": "col1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "start_time",
+   "fieldtype": "Time",
+   "label": "Start Time",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "end_time",
+   "fieldtype": "Time",
+   "label": "End Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "default_driver",
+   "fieldtype": "Link",
+   "label": "Default Driver",
+   "options": "Employee",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "default_driver_name",
+   "fieldtype": "Data",
+   "label": "Driver Name",
+   "fetch_from": "default_driver.employee_name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "default_vehicle",
+   "fieldtype": "Link",
+   "label": "Default Vehicle",
+   "options": "Vehicle"
+  },
+  {
+   "fieldname": "days_section",
+   "fieldtype": "Section Break",
+   "label": "Runs On"
+  },
+  {
+   "fieldname": "monday",
+   "fieldtype": "Check",
+   "label": "Mon",
+   "default": "1",
+   "in_list_view": 0
+  },
+  {
+   "fieldname": "tuesday",
+   "fieldtype": "Check",
+   "label": "Tue",
+   "default": "1",
+   "in_list_view": 0
+  },
+  {
+   "fieldname": "wednesday",
+   "fieldtype": "Check",
+   "label": "Wed",
+   "default": "1",
+   "in_list_view": 0
+  },
+  {
+   "fieldname": "days_col2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "thursday",
+   "fieldtype": "Check",
+   "label": "Thu",
+   "default": "1",
+   "in_list_view": 0
+  },
+  {
+   "fieldname": "friday",
+   "fieldtype": "Check",
+   "label": "Fri",
+   "default": "1",
+   "in_list_view": 0
+  },
+  {
+   "fieldname": "days_col4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "saturday",
+   "fieldtype": "Check",
+   "label": "Sat",
+   "default": "0",
+   "in_list_view": 0
+  },
+  {
+   "fieldname": "sunday",
+   "fieldtype": "Check",
+   "label": "Sun",
+   "default": "0",
+   "in_list_view": 0
+  },
+  {
+   "fieldname": "validity_section",
+   "fieldtype": "Section Break",
+   "label": "Validity"
+  },
+  {
+   "fieldname": "valid_from",
+   "fieldtype": "Date",
+   "label": "Valid From"
+  },
+  {
+   "fieldname": "valid_to",
+   "fieldtype": "Date",
+   "label": "Valid To"
+  },
+  {
+   "fieldname": "col2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "holiday_list",
+   "fieldtype": "Link",
+   "label": "Holiday List",
+   "options": "Holiday List",
+   "description": "Leave empty to use the school's holidays"
+  },
+  {
+   "fieldname": "passengers_section",
+   "fieldtype": "Section Break",
+   "label": "Passengers"
+  },
+  {
+   "fieldname": "passengers",
+   "fieldtype": "Table",
+   "label": "Passengers",
+   "options": "Tour Template Passenger"
+  }
+ ],
+ "field_order": [
+  "template_name",
+  "school",
+  "direction",
+  "is_active",
+  "col1",
+  "start_time",
+  "end_time",
+  "default_driver",
+  "default_driver_name",
+  "default_vehicle",
+  "days_section",
+  "monday",
+  "tuesday",
+  "wednesday",
+  "days_col2",
+  "thursday",
+  "friday",
+  "days_col4",
+  "saturday",
+  "sunday",
+  "validity_section",
+  "valid_from",
+  "valid_to",
+  "col2",
+  "holiday_list",
+  "passengers_section",
+  "passengers"
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Transport Dispatcher",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Transport Driver",
+   "read": 1,
+   "print": 1,
+   "report": 1
+  }
+ ],
+ "states": [],
+ "links": [],
+ "actions": [],
+ "autoname": "field:template_name",
+ "naming_rule": "By fieldname"
+}

@@ -1,0 +1,223 @@
+{
+ "doctype": "DocType",
+ "name": "Tour",
+ "module": "Lutece Transport",
+ "owner": "Administrator",
+ "creation": "2026-10-16 21:00:00.000000",
+ "modified": "2026-10-16 21:00:00.000000",
+ "modified_by": "Administrator",
+ "custom": 0,
+ "engine": "InnoDB",
+ "sort_field": "tour_date",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title",
+   "read_only": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "tour_date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "tour_template",
+   "fieldtype": "Link",
+   "label": "Tour Template",
+   "options": "Tour Template",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "school",
+   "fieldtype": "Link",
+   "label": "School",
+   "options": "Transport School",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "direction",
+   "fieldtype": "Select",
+   "label": "Direction",
+   "options": "To School\nFrom School",
+   "reqd": 1
+  },
+  {
+   "fieldname": "col1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "start_time",
+   "fieldtype": "Time",
+   "label": "Start Time",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "end_time",
+   "fieldtype": "Time",
+   "label": "End Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Planned\nCompleted\nCancelled",
+   "default": "Planned",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "assignment_section",
+   "fieldtype": "Section Break",
+   "label": "Assignment"
+  },
+  {
+   "fieldname": "driver",
+   "fieldtype": "Link",
+   "label": "Driver",
+   "options": "Employee",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "driver_name",
+   "fieldtype": "Data",
+   "label": "Driver Name",
+   "fetch_from": "driver.employee_name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "vehicle",
+   "fieldtype": "Link",
+   "label": "Vehicle",
+   "options": "Vehicle",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "issues_section",
+   "fieldtype": "Section Break",
+   "label": "Checks"
+  },
+  {
+   "fieldname": "has_issues",
+   "fieldtype": "Check",
+   "label": "Needs Attention",
+   "read_only": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "coverage_issues",
+   "fieldtype": "Small Text",
+   "label": "Issues",
+   "read_only": 1,
+   "depends_on": "coverage_issues"
+  },
+  {
+   "fieldname": "passengers_section",
+   "fieldtype": "Section Break",
+   "label": "Passengers"
+  },
+  {
+   "fieldname": "passengers",
+   "fieldtype": "Table",
+   "label": "Passengers",
+   "options": "Tour Passenger"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "start_datetime",
+   "fieldtype": "Datetime",
+   "label": "Start",
+   "hidden": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "end_datetime",
+   "fieldtype": "Datetime",
+   "label": "End",
+   "hidden": 1,
+   "read_only": 1
+  }
+ ],
+ "field_order": [
+  "title",
+  "tour_date",
+  "tour_template",
+  "school",
+  "direction",
+  "col1",
+  "start_time",
+  "end_time",
+  "status",
+  "assignment_section",
+  "driver",
+  "driver_name",
+  "col2",
+  "vehicle",
+  "issues_section",
+  "has_issues",
+  "coverage_issues",
+  "passengers_section",
+  "passengers",
+  "remarks",
+  "start_datetime",
+  "end_datetime"
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Transport Dispatcher",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Transport Driver",
+   "read": 1,
+   "print": 1,
+   "report": 1
+  }
+ ],
+ "states": [],
+ "links": [],
+ "actions": [],
+ "autoname": "format:TOUR-{YYYY}-{#####}",
+ "naming_rule": "Expression",
+ "title_field": "title",
+ "show_title_field_in_link": 1,
+ "search_fields": "tour_date,driver_name,tour_template"
+}

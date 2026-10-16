@@ -1,0 +1,50 @@
+{
+ "doctype": "DocType",
+ "name": "Passenger Schedule",
+ "module": "Lutece Transport",
+ "owner": "Administrator",
+ "creation": "2026-10-16 21:00:00.000000",
+ "modified": "2026-10-16 21:00:00.000000",
+ "modified_by": "Administrator",
+ "custom": 0,
+ "engine": "InnoDB",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 0,
+ "fields": [
+  {
+   "fieldname": "weekday",
+   "fieldtype": "Select",
+   "label": "Weekday",
+   "options": "Monday\nTuesday\nWednesday\nThursday\nFriday\nSaturday\nSunday",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "direction",
+   "fieldtype": "Select",
+   "label": "Direction",
+   "options": "To School\nFrom School",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "time",
+   "fieldtype": "Time",
+   "label": "Time",
+   "in_list_view": 1,
+   "description": "Approximate, for information"
+  }
+ ],
+ "field_order": [
+  "weekday",
+  "direction",
+  "time"
+ ],
+ "permissions": [],
+ "states": [],
+ "links": [],
+ "actions": [],
+ "istable": 1,
+ "editable_grid": 1
+}

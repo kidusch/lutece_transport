@@ -1,0 +1,73 @@
+{
+ "doctype": "DocType",
+ "name": "Transport Settings",
+ "module": "Lutece Transport",
+ "owner": "Administrator",
+ "creation": "2026-10-16 21:00:00.000000",
+ "modified": "2026-10-16 21:00:00.000000",
+ "modified_by": "Administrator",
+ "custom": 0,
+ "engine": "InnoDB",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "fields": [
+  {
+   "fieldname": "horizon_days",
+   "fieldtype": "Int",
+   "label": "Generate Tours For (days ahead)",
+   "default": "14"
+  },
+  {
+   "fieldname": "default_holiday_list",
+   "fieldtype": "Link",
+   "label": "Default Holiday List",
+   "options": "Holiday List",
+   "description": "Used when neither the tour template nor the school has one"
+  },
+  {
+   "fieldname": "col1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "digest_days",
+   "fieldtype": "Int",
+   "label": "Daily Check Looks Ahead (days)",
+   "default": "3"
+  },
+  {
+   "fieldname": "send_all_clear",
+   "fieldtype": "Check",
+   "label": "Send Email Even When Everything Is Covered",
+   "default": "1"
+  }
+ ],
+ "field_order": [
+  "horizon_days",
+  "default_holiday_list",
+  "col1",
+  "digest_days",
+  "send_all_clear"
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Transport Dispatcher",
+   "read": 1,
+   "write": 1,
+   "create": 1
+  }
+ ],
+ "states": [],
+ "links": [],
+ "actions": [],
+ "issingle": 1
+}

@@ -1,0 +1,19 @@
+[project]
+name = "lutece_transport"
+authors = [{ name = "Kidus Dejen Yirgu", email = "kidus.dejen@gmail.com" }]
+description = "School and special transport planning for ERPNext: tours, driver assignment and coverage checks"
+requires-python = ">=3.10"
+readme = "README.md"
+license = { text = "MIT" }
+dynamic = ["version"]
+dependencies = []
+
+[build-system]
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.bench.frappe-dependencies]
+frappe = ">=15.0.0,<17.0.0"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
