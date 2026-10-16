@@ -46,12 +46,14 @@ Frappe app that brings the Lutece transport system into ERPNext/HRMS. Its main j
 
 ## Setup
 
+- Tested on ERPNext + HRMS v15 and v16.
 - `bench get-app <repo-url>` then `bench --site <site> install-app lutece_transport`
   - Requires ERPNext and HRMS.
   - Fixtures add the custom fields and the two roles.
 - **Employee:** tick *Is Driver*, and fill *Licence Valid Until* and *Next Medical Check*.
 - **Vehicle:** fill *Passenger Seats*, *Wheelchair Accessible* and *Next Technical Inspection*. The insurance end date uses the standard field.
 - Give each school a Holiday List, or set a default in **Transport Settings**.
+- **On v16:** HRMS also needs a submitted **Holiday List Assignment** (Applicable For: Company) before any leave can be approved. That leave is what tells the app a driver is unavailable.
 - Give dispatchers the **Transport Dispatcher** role.
 - For drivers:
   - Give them **Transport Driver**.
