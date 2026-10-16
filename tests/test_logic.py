@@ -130,3 +130,13 @@ def test_contract_window_limits_expectations():
     sched = [{"weekday": "Monday", "direction": "To School"}]
     assert L.expected_trips(sched, "2026-10-20", None, set(), [MON]) == Counter()
     assert L.expected_trips(sched, "2026-09-01", "2026-10-18", set(), [MON]) == Counter()
+
+
+def test_unaccepted_tour_is_a_gap_only_when_due():
+    t = base_tour(accepted=0)
+    assert L.tour_issues(t, base_ctx()) == []                       # not due yet
+    issues = L.tour_issues(t, base_ctx(acceptance_due=True))
+    assert codes(issues) == ["NOT_ACCEPTED"] and issues[0].level == L.GAP
+    assert L.tour_issues(base_tour(accepted=1), base_ctx(acceptance_due=True)) == []
+    # no driver: only the NO_DRIVER gap, not an acceptance gap
+    assert codes(L.tour_issues(base_tour(driver=None, accepted=0), base_ctx(driver=None, acceptance_due=True))) == ["NO_DRIVER"]

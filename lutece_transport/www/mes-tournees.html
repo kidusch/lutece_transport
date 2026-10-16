@@ -1,0 +1,139 @@
+{% extends "templates/web.html" %}
+
+{% block title %}{{ _("My Tours") }}{% endblock %}
+
+{% block style %}
+{{ super() }}
+<style>
+  .lt { max-width: 640px; margin: 0 auto; padding: 8px 4px 48px; font-size: 16px; color: #1B2A2F; }
+  .lt h1 { font-size: 24px; margin: 4px 0 2px; }
+  .lt .who { color: #6B7B80; margin-bottom: 14px; }
+  .lt .days { display: flex; gap: 8px; margin-bottom: 16px; }
+  .lt .days button, .lt .days input { flex: 1; padding: 10px; border-radius: 10px; border: 1px solid #C9D6D4; background: #fff; font-size: 16px; }
+  .lt .days button.on { background: #0E3B43; color: #fff; border-color: #0E3B43; }
+  .lt .box { background: #EEF4F3; border-radius: 14px; padding: 14px; margin-bottom: 14px; }
+  .lt .accept-list .item { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid #D5E2E0; }
+  .lt .accept-list .item:first-of-type { border-top: 0; }
+  .lt .tour-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .lt .tour-head h2 { font-size: 19px; margin: 0; }
+  .lt .meta { color: #4C5D61; font-size: 15px; margin: 4px 0 10px; }
+  .lt .pill { font-size: 13px; padding: 3px 10px; border-radius: 99px; background: #F2B705; color: #1B2A2F; white-space: nowrap; }
+  .lt .pill.ok { background: #2E8B57; color: #fff; }
+  .lt .pax { background: #fff; border-radius: 12px; padding: 12px; margin-top: 10px; }
+  .lt .pax .name { font-weight: 600; font-size: 17px; }
+  .lt .pax .addr { color: #4C5D61; font-size: 14px; margin: 2px 0 10px; }
+  .lt .pax .btns { display: flex; gap: 8px; }
+  .lt .btn { flex: 1; padding: 13px 10px; border-radius: 10px; border: 0; font-size: 16px; font-weight: 600; cursor: pointer; }
+  .lt .btn:disabled { opacity: .45; }
+  .lt .go { background: #0E7C7B; color: #fff; }
+  .lt .abs { background: #fff; color: #C0392B; border: 2px solid #C0392B; }
+  .lt .main { background: #0E3B43; color: #fff; width: 100%; margin-top: 14px; }
+  .lt .state { font-weight: 600; }
+  .lt .state.Picked { color: #2E8B57; } .lt .state.Absent { color: #C0392B; }
+  .lt .link { background: none; border: 0; color: #0E7C7B; text-decoration: underline; font-size: 14px; padding: 0 0 0 8px; cursor: pointer; }
+  .lt .empty { color: #6B7B80; text-align: center; padding: 24px 0; }
+</style>
+{% endblock %}
+
+{% block page_content %}
+<div class="lt" id="lt-root" data-config="{{ lt_config | e }}">
+  <h1>{{ _("My Tours") }}</h1>
+  <div class="who" id="lt-who"></div>
+  <div class="days">
+    <button id="lt-today" class="on">{{ _("Today") }}</button>
+    <button id="lt-tomorrow">{{ _("Tomorrow") }}</button>
+    <input type="date" id="lt-date" aria-label="Date">
+  </div>
+  <div id="lt-accept"></div>
+  <div id="lt-tours"></div>
+</div>
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+<script>
+(function () {
+  const CFG = JSON.parse(document.getElementById("lt-root").dataset.config);
+  const T = CFG.labels;
+  const API = "lutece_transport.driver_api.";
+  const iso = d => d.toISOString().slice(0, 10);
+  const todayIso = iso(new Date(Date.now() - new Date().getTimezoneOffset() * 60000));
+  const tomorrowIso = iso(new Date(Date.now() - new Date().getTimezoneOffset() * 60000 + 864e5));
+  let day = todayIso;
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+
+  const CSRF = CFG.csrf;
+  let busy = false;
+  async function call(method, args, done) {
+    if (busy) return; busy = true; document.body.style.cursor = "wait";
+    try {
+      const get = method === "get_my_tours";
+      const qs = new URLSearchParams(args).toString();
+      const r = await fetch("/api/method/" + API + method + (get ? "?" + qs : ""), {
+        method: get ? "GET" : "POST", credentials: "same-origin",
+        headers: { "Accept": "application/json", "X-Frappe-CSRF-Token": CSRF, ...(get ? {} : { "Content-Type": "application/x-www-form-urlencoded" }) },
+        body: get ? undefined : qs });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) {
+        let msg = T.error;
+        try { msg = JSON.parse(JSON.parse(j._server_messages)[0]).message || msg; } catch (e) { if (j.exception) msg = String(j.exception).split(": ").slice(1).join(": ") || msg; }
+        busy = false; document.body.style.cursor = "";
+        alert(msg.replace(/<[^>]+>/g, "")); document.body.style.cursor = "";
+      } else { busy = false; document.body.style.cursor = ""; if (done) done(j.message); }
+    } catch (e) { busy = false; document.body.style.cursor = ""; alert(T.error); }
+  }
+
+  function load() {
+    document.getElementById("lt-today").classList.toggle("on", day === todayIso);
+    document.getElementById("lt-tomorrow").classList.toggle("on", day === tomorrowIso);
+    document.getElementById("lt-date").value = day;
+    call("get_my_tours", { date: day }, render);
+  }
+
+  function render(data) {
+    document.getElementById("lt-who").textContent = data.driver + " · " + data.date_label;
+    const acc = document.getElementById("lt-accept");
+    acc.innerHTML = data.to_accept.length ? `<div class="box accept-list"><strong>${esc(T.to_accept)}</strong>` +
+      data.to_accept.map(t => `<div class="item"><span>${esc(t.label)}</span><button class="btn go" style="flex:0 0 auto" data-accept="${esc(t.name)}">${esc(T.accept)}</button></div>`).join("") + `</div>` : "";
+    const box = document.getElementById("lt-tours");
+    if (!data.tours.length) { box.innerHTML = `<div class="empty">${esc(T.none)}</div>`; return; }
+    box.innerHTML = data.tours.map(tour => {
+      const open = tour.status === "Planned";
+      const canWork = open && day <= todayIso;
+      const head = `<div class="tour-head"><h2>${esc(tour.start)} – ${esc(tour.end)} · ${esc(tour.title)}</h2>` +
+        (tour.completed ? `<span class="pill ok">${esc(T.completed)}</span>` : tour.accepted ? `<span class="pill ok">${esc(T.accepted)}</span>` : `<span class="pill">${esc(T.pending)}</span>`) + `</div>` +
+        `<div class="meta">${esc(tour.direction)} · ${esc(T.vehicle)} ${esc(tour.vehicle || "—")}${tour.school ? " · " + esc(tour.school) : ""}</div>`;
+      const acceptBtn = open && !tour.accepted ? `<button class="btn go main" data-accept="${esc(tour.name)}">${esc(T.accept)}</button>` : "";
+      const pax = tour.passengers.map(p => {
+        const done = p.status !== "Planned";
+        const state = p.status === "Picked Up" ? `<span class="state Picked">✓ ${esc(T.picked)}</span>` : p.status === "Absent" ? `<span class="state Absent">✕ ${esc(T.absent)}</span>` : "";
+        const btns = canWork && tour.accepted ? (done
+            ? `${state}<button class="link" data-row="${esc(p.row)}" data-tour="${esc(tour.name)}" data-status="Planned">${esc(T.undo)}</button>`
+            : `<div class="btns"><button class="btn go" data-row="${esc(p.row)}" data-tour="${esc(tour.name)}" data-status="Picked Up">${esc(T.picked)}</button>` +
+              `<button class="btn abs" data-row="${esc(p.row)}" data-tour="${esc(tour.name)}" data-status="Absent" data-name="${esc(p.name)}">${esc(T.absent)}</button></div>`)
+          : state;
+        return `<div class="pax"><div class="name">${esc(p.time)} · ${esc(p.name)}</div>` +
+          `<div class="addr">${esc(T.pickup)} : ${esc(p.pickup)}<br>${esc(T.dropoff)} : ${esc(p.dropoff)}</div>${btns}</div>`;
+      }).join("");
+      const allSet = tour.passengers.every(p => p.status !== "Planned");
+      const endBtn = canWork && tour.accepted ? `<button class="btn main" data-complete="${esc(tour.name)}" ${allSet ? "" : "disabled"}>${esc(T.complete)}</button>` : "";
+      return `<div class="box">${head}${acceptBtn}${pax}${endBtn}</div>`;
+    }).join("");
+  }
+
+  document.addEventListener("click", e => {
+    const b = e.target.closest("button"); if (!b || !b.closest(".lt")) return;
+    if (b.id === "lt-today") { day = todayIso; return load(); }
+    if (b.id === "lt-tomorrow") { day = tomorrowIso; return load(); }
+    if (b.dataset.accept) return call("accept_tour", { tour: b.dataset.accept }, load);
+    if (b.dataset.complete) { if (confirm(T.confirm_complete)) call("complete_tour", { tour: b.dataset.complete }, load); return; }
+    if (b.dataset.row) {
+      if (b.dataset.status === "Absent" && !confirm(T.confirm_absent.replace("{0}", b.dataset.name))) return;
+      call("set_passenger_status", { tour: b.dataset.tour, row: b.dataset.row, status: b.dataset.status }, load);
+    }
+  });
+  document.getElementById("lt-date").addEventListener("change", e => { if (e.target.value) { day = e.target.value; load(); } });
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", load); else load();
+})();
+</script>
+{% endblock %}

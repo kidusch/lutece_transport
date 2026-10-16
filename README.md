@@ -62,6 +62,18 @@ Frappe app that brings the Lutece transport system into ERPNext/HRMS. Its main j
   - Tour generation runs at 05:00; the coverage email runs at 15:00 (site time zone).
   - Make sure the scheduler is enabled: `bench --site <site> enable-scheduler`.
 
+## Driver page (/mes-tournees)
+
+- Phone-friendly page for users with the **Transport Driver** role; it is their home page after login.
+- Shows the driver's own tours for a day (today, tomorrow or a chosen date) and the tours of the next 7 days still to accept.
+- Three actions, nothing else, each only on the driver's own tours:
+    - **Accept** a tour. There is no refusal: drivers call the planner.
+    - **Picked up / Absent** for each passenger (today only). An absence emails the planners and adds a comment on the tour.
+    - **End the tour**, only once every passenger has a status. The tour becomes *Completed*.
+- From the day before, a tour its driver has not accepted is reported as not covered (reports and 15:00 email).
+- Changing a tour's driver or date resets the acceptance.
+- Setup per driver: user with the Transport Driver role, linked in the Employee's *User* field.
+
 ## Mapping from Lutece
 
 - Client → Passenger (billing through a linked Customer)

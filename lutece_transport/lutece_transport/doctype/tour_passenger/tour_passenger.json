@@ -55,6 +55,12 @@
    "description": "Absent frees the seat but still counts as covered. Cancelled means the passenger is not transported by this tour."
   },
   {
+   "fieldname": "status_time",
+   "fieldtype": "Datetime",
+   "label": "Status Time",
+   "read_only": 1
+  },
+  {
    "fieldname": "from_template",
    "fieldtype": "Check",
    "label": "From Template",
@@ -68,6 +74,7 @@
   "pickup_address",
   "dropoff_address",
   "status",
+  "status_time",
   "from_template"
  ],
  "permissions": [],

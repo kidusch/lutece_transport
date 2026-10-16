@@ -140,3 +140,40 @@ warning,avertissement
 {0}'s contract does not cover {1}.,Le contrat de {0} ne couvre pas le {1}.
 "Drivers, vehicles and setup","Chauffeurs, véhicules et paramétrage"
 Passenger Name,Nom du passager
+Driver Confirmation,Confirmation du chauffeur
+Accepted by Driver,Acceptée par le chauffeur
+Accepted On,Acceptée le
+Completed On,Terminée le
+Status Time,Heure du statut
+Driver {0} has not accepted this tour yet.,Le chauffeur {0} n'a pas encore accepté cette tournée.
+My Tours,Mes tournées
+Today,Aujourd'hui
+Tomorrow,Demain
+Tours to accept,Tournées à accepter
+Accept,Accepter
+Accepted,Acceptée
+Undo,Annuler
+End the tour,Terminer la tournée
+Tour completed,Tournée terminée
+No tour on this day.,Aucune tournée ce jour-là.
+Pickup,Prise en charge
+Drop-off,Dépose
+End this tour? Every passenger has a status.,Terminer cette tournée ? Chaque passager a un statut.
+Mark {0} as absent? The planner will be notified.,Marquer {0} absent(e) ? Le planificateur sera prévenu.
+Accept this tour before starting it.,Acceptez cette tournée avant de la commencer.
+Something went wrong. Try again.,Une erreur est survenue. Réessayez.
+Please log in.,Veuillez vous connecter.
+Your user account is not linked to an active driver (Employee).,Votre compte n'est lié à aucun chauffeur actif (Employé).
+This tour is not assigned to you.,Cette tournée ne vous est pas attribuée.
+This tour has been cancelled.,Cette tournée a été annulée.
+Only a planned tour can be accepted.,Seule une tournée prévue peut être acceptée.
+Invalid status.,Statut invalide.
+This tour is already completed.,Cette tournée est déjà terminée.
+You can only update today's tours.,Vous ne pouvez modifier que les tournées du jour.
+This passenger is not on the tour.,Ce passager n'est pas sur la tournée.
+You can only complete today's tours.,Vous ne pouvez terminer que les tournées du jour.
+Mark every passenger as picked up or absent first: {0},Indiquez d'abord pour chaque passager « pris en charge » ou « absent » : {0}
+{0} was not picked up (absent) – reported by {1} at {2}.,{0} n'a pas été pris(e) en charge (absent) – signalé par {1} à {2}.
+Absence: {0} – {1} {2},Absence : {0} – {1} {2}
+To accept,À accepter
+Absent (not picked up),Absent

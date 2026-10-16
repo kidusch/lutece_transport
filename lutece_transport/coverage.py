@@ -131,6 +131,7 @@ def tour_as_dict(doc):
         "name": d.get("name"), "tour_date": getdate(d.get("tour_date")),
         "start_time": d.get("start_time"), "end_time": d.get("end_time"),
         "driver": d.get("driver"), "vehicle": d.get("vehicle"), "status": d.get("status"),
+        "accepted": d.get("accepted"),
         "passengers": [{"passenger": p.get("passenger"), "status": p.get("status")}
                        for p in d.get("passengers") or []],
     }
@@ -142,6 +143,7 @@ def check_tour(doc):
     pids = {p["passenger"] for p in t["passengers"] if p["passenger"] and p["status"] != "Cancelled"}
     ctx = {
         "driver": driver_info(t["driver"], t["tour_date"]),
+        "acceptance_due": t["tour_date"] <= getdate(add_days(nowdate(), 1)),
         "vehicle": vehicle_info(t["vehicle"]),
         "driver_conflicts": _other_tours("driver", t["driver"], t["tour_date"], t["name"]),
         "vehicle_conflicts": _other_tours("vehicle", t["vehicle"], t["tour_date"], t["name"]),

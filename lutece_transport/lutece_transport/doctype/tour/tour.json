@@ -107,6 +107,34 @@
    "in_standard_filter": 1
   },
   {
+   "fieldname": "driver_section",
+   "fieldtype": "Section Break",
+   "label": "Driver Confirmation"
+  },
+  {
+   "fieldname": "accepted",
+   "fieldtype": "Check",
+   "label": "Accepted by Driver",
+   "read_only": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "accepted_on",
+   "fieldtype": "Datetime",
+   "label": "Accepted On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "completed_on",
+   "fieldtype": "Datetime",
+   "label": "Completed On",
+   "read_only": 1
+  },
+  {
    "fieldname": "issues_section",
    "fieldtype": "Section Break",
    "label": "Checks"
@@ -171,6 +199,11 @@
   "driver_name",
   "col2",
   "vehicle",
+  "driver_section",
+  "accepted",
+  "accepted_on",
+  "col3",
+  "completed_on",
   "issues_section",
   "has_issues",
   "coverage_issues",

@@ -12,7 +12,17 @@ class Tour(Document):
 		self.fill_from_template()
 		self.validate_one_tour_per_template_and_day()
 		self.set_title_and_datetimes()
+		self.reset_acceptance_on_reassignment()
 		self.run_checks()
+
+	def reset_acceptance_on_reassignment(self):
+		"""A new driver (or a new date) must accept the tour again."""
+		if self.is_new():
+			return
+		before = self.get_doc_before_save()
+		if before and (before.driver != self.driver or getdate(before.tour_date) != getdate(self.tour_date)):
+			self.accepted = 0
+			self.accepted_on = None
 
 	def fill_from_template(self):
 		if not self.tour_template:

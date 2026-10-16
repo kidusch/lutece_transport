@@ -176,6 +176,9 @@ def tour_issues(tour: dict, ctx: dict) -> list[Issue]:
         med = to_date(driver.get("next_medical_check"))
         if med and med < d:
             add(WARNING, "MEDICAL_OVERDUE", "Driver {0}'s medical check was due on {1}.", name, med)
+        # The driver must accept the tour; from the day before it runs, an unaccepted tour is a gap.
+        if not tour.get("accepted") and ctx.get("acceptance_due"):
+            add(GAP, "NOT_ACCEPTED", "Driver {0} has not accepted this tour yet.", name)
 
     # --- vehicle
     vehicle = ctx.get("vehicle")
