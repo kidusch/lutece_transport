@@ -4,7 +4,7 @@ from frappe.model.document import Document
 from frappe.utils import get_datetime, getdate
 
 from lutece_transport import logic as L
-from lutece_transport.coverage import check_tour, format_issues
+from lutece_transport.coverage import check_tour, format_issues, issue_text
 
 
 class Tour(Document):
@@ -56,12 +56,12 @@ class Tour(Document):
 		# coverage reports instead of silently not being created.
 		if errors and not self.flags.ignore_coverage_errors:
 			frappe.throw(
-				"<br>".join(i.message for i in errors), title=_("This tour can't be saved as is")
+				"<br>".join(issue_text(i) for i in errors), title=_("This tour can't be saved as is")
 			)
 		if not self.flags.ignore_coverage_errors:
 			notes = [i for i in issues if i.level != L.ERROR]
 			if notes:
-				frappe.msgprint("<br>".join(i.message for i in notes), indicator="orange", alert=True)
+				frappe.msgprint("<br>".join(issue_text(i) for i in notes), indicator="orange", alert=True)
 
 
 @frappe.whitelist()

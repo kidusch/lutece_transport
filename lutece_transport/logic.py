@@ -28,9 +28,19 @@ WARNING = "warning"  # informational
 
 @dataclass(frozen=True)
 class Issue:
+    """A problem found on a tour.
+
+    `template` is a literal English sentence with {0}, {1}... placeholders so the
+    Frappe layer can translate it (``_(issue.template).format(*issue.args)``).
+    """
     level: str
     code: str
-    message: str
+    template: str
+    args: tuple = ()
+
+    @property
+    def message(self) -> str:
+        return self.template.format(*self.args)
 
     @property
     def flags_tour(self) -> bool:
@@ -121,12 +131,16 @@ def tour_issues(tour: dict, ctx: dict) -> list[Issue]:
           passenger_conflicts {passenger_id: [{name, start_time, end_time}]}
     """
     issues: list[Issue] = []
+    add = lambda level, code, template, *args: issues.append(Issue(level, code, template, tuple(args)))
     d = to_date(tour["tour_date"])
     start, end = tour.get("start_time"), tour.get("end_time")
 
+    def span(c):
+        return f"{fmt_time(c['start_time'])}–{fmt_time(c['end_time'])}"
+
     s, e = to_minutes(start), to_minutes(end)
     if s is not None and e is not None and e <= s:
-        issues.append(Issue(ERROR, "TIME_ORDER", "End time must be after start time."))
+        add(ERROR, "TIME_ORDER", "End time must be after start time.")
 
     if tour.get("status") in ("Cancelled", "Completed"):
         return issues
@@ -139,74 +153,65 @@ def tour_issues(tour: dict, ctx: dict) -> list[Issue]:
     seen = Counter(r["passenger"] for r in rows if r.get("status") not in UNCOVERED_STATUSES)
     for pid, n in seen.items():
         if n > 1:
-            issues.append(Issue(ERROR, "PASSENGER_DUPLICATE",
-                                f"{_pname(pinfo, pid)} is listed {n} times on this tour."))
+            add(ERROR, "PASSENGER_DUPLICATE", "{0} is listed {1} times on this tour.", _pname(pinfo, pid), n)
 
     # --- driver
     driver = ctx.get("driver")
     if not tour.get("driver"):
-        issues.append(Issue(GAP, "NO_DRIVER", "No driver assigned."))
+        add(GAP, "NO_DRIVER", "No driver assigned.")
     elif driver:
         name = driver.get("employee_name") or driver.get("name")
         if driver.get("status") and driver["status"] != "Active":
-            issues.append(Issue(ERROR, "DRIVER_INACTIVE", f"Driver {name} is not active ({driver['status']})."))
+            add(ERROR, "DRIVER_INACTIVE", "Driver {0} is not active ({1}).", name, driver["status"])
         elif driver.get("relieving_date") and to_date(driver["relieving_date"]) <= d:
-            issues.append(Issue(ERROR, "DRIVER_LEFT", f"Driver {name} has left on {to_date(driver['relieving_date'])}."))
+            add(ERROR, "DRIVER_LEFT", "Driver {0} has left on {1}.", name, to_date(driver["relieving_date"]))
         if driver.get("on_leave"):
-            issues.append(Issue(ERROR, "DRIVER_ON_LEAVE", f"Driver {name} is on approved leave on {d}."))
+            add(ERROR, "DRIVER_ON_LEAVE", "Driver {0} is on approved leave on {1}.", name, d)
         for c in ctx.get("driver_conflicts") or []:
             if overlaps(start, end, c["start_time"], c["end_time"]):
-                issues.append(Issue(ERROR, "DRIVER_DOUBLE_BOOKED",
-                                    f"Driver {name} is already on {c['name']} "
-                                    f"({fmt_time(c['start_time'])}–{fmt_time(c['end_time'])})."))
+                add(ERROR, "DRIVER_DOUBLE_BOOKED", "Driver {0} is already on {1} ({2}).", name, c["name"], span(c))
         lic = to_date(driver.get("licence_valid_until"))
         if lic and lic < d:
-            issues.append(Issue(WARNING, "LICENCE_EXPIRED", f"Driver {name}'s licence expired on {lic}."))
+            add(WARNING, "LICENCE_EXPIRED", "Driver {0}'s licence expired on {1}.", name, lic)
         med = to_date(driver.get("next_medical_check"))
         if med and med < d:
-            issues.append(Issue(WARNING, "MEDICAL_OVERDUE", f"Driver {name}'s medical check was due on {med}."))
+            add(WARNING, "MEDICAL_OVERDUE", "Driver {0}'s medical check was due on {1}.", name, med)
 
     # --- vehicle
     vehicle = ctx.get("vehicle")
     if not tour.get("vehicle"):
-        issues.append(Issue(GAP, "NO_VEHICLE", "No vehicle assigned."))
+        add(GAP, "NO_VEHICLE", "No vehicle assigned.")
     elif vehicle:
         vname = vehicle.get("name")
         for c in ctx.get("vehicle_conflicts") or []:
             if overlaps(start, end, c["start_time"], c["end_time"]):
-                issues.append(Issue(ERROR, "VEHICLE_DOUBLE_BOOKED",
-                                    f"Vehicle {vname} is already on {c['name']} "
-                                    f"({fmt_time(c['start_time'])}–{fmt_time(c['end_time'])})."))
+                add(ERROR, "VEHICLE_DOUBLE_BOOKED", "Vehicle {0} is already on {1} ({2}).", vname, c["name"], span(c))
         seats = vehicle.get("seats") or 0
         if seats and len(riding) > seats:
-            issues.append(Issue(ERROR, "SEATS_EXCEEDED",
-                                f"{len(riding)} passengers but vehicle {vname} has {seats} seats."))
+            add(ERROR, "SEATS_EXCEEDED", "{0} passengers but vehicle {1} has {2} seats.", len(riding), vname, seats)
         if not vehicle.get("wheelchair_accessible"):
             for r in riding:
                 if (pinfo.get(r["passenger"]) or {}).get("wheelchair"):
-                    issues.append(Issue(ERROR, "WHEELCHAIR",
-                                        f"{_pname(pinfo, r['passenger'])} needs a wheelchair-accessible vehicle; "
-                                        f"{vname} is not."))
+                    add(ERROR, "WHEELCHAIR", "{0} needs a wheelchair-accessible vehicle; {1} is not.",
+                        _pname(pinfo, r["passenger"]), vname)
         insp = to_date(vehicle.get("next_inspection"))
         if insp and insp < d:
-            issues.append(Issue(WARNING, "INSPECTION_OVERDUE", f"Vehicle {vname}'s inspection was due on {insp}."))
+            add(WARNING, "INSPECTION_OVERDUE", "Vehicle {0}'s inspection was due on {1}.", vname, insp)
         ins = to_date(vehicle.get("insurance_valid_until"))
         if ins and ins < d:
-            issues.append(Issue(WARNING, "INSURANCE_EXPIRED", f"Vehicle {vname}'s insurance ended on {ins}."))
+            add(WARNING, "INSURANCE_EXPIRED", "Vehicle {0}'s insurance ended on {1}.", vname, ins)
 
     # --- passengers
     if not riding:
-        issues.append(Issue(WARNING, "NO_PASSENGERS", "No passengers on this tour."))
+        add(WARNING, "NO_PASSENGERS", "No passengers on this tour.")
     for r in riding:
         pid = r["passenger"]
         info = pinfo.get(pid) or {}
         if info and not covers(info.get("contract_start"), info.get("contract_end"), d):
-            issues.append(Issue(WARNING, "CONTRACT", f"{_pname(pinfo, pid)}'s contract does not cover {d}."))
+            add(WARNING, "CONTRACT", "{0}'s contract does not cover {1}.", _pname(pinfo, pid), d)
         for c in (ctx.get("passenger_conflicts") or {}).get(pid, []):
             if overlaps(start, end, c["start_time"], c["end_time"]):
-                issues.append(Issue(ERROR, "PASSENGER_DOUBLE_BOOKED",
-                                    f"{_pname(pinfo, pid)} is already on {c['name']} "
-                                    f"({fmt_time(c['start_time'])}–{fmt_time(c['end_time'])})."))
+                add(ERROR, "PASSENGER_DOUBLE_BOOKED", "{0} is already on {1} ({2}).", _pname(pinfo, pid), c["name"], span(c))
     return issues
 
 

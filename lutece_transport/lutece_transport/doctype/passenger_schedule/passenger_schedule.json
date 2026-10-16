@@ -31,7 +31,7 @@
   {
    "fieldname": "time",
    "fieldtype": "Time",
-   "label": "Time",
+   "label": "Approx. Time",
    "in_list_view": 1,
    "description": "Approximate, for information"
   }

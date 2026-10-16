@@ -1,0 +1,141 @@
+Absent frees the seat but still counts as covered. Cancelled means the passenger is not transported by this tour.,Absent libère la place mais compte comme couvert. Annulé signifie que le passager n'est pas transporté par cette tournée.
+Adult,Adulte
+"All planned tours have a driver and a vehicle, and every passenger is on a tour, for {0}.","Toutes les tournées prévues ont un chauffeur et un véhicule, et chaque passager est sur une tournée, pour {0}."
+Apply Driver/Vehicle/Times to Future Tours,Appliquer chauffeur/véhicule/horaires aux tournées futures
+Approx. Time,Heure approx.
+"Approximate, for information","Approximatif, pour information"
+Assignment,Affectation
+Billed Customer,Client facturé
+Bus Lane Permit,Autorisation voies de bus
+Checks,Contrôles
+Contact,Contact
+Coverage check for {0}.,Contrôle de couverture pour {0}.
+Coverage checks,Contrôles de couverture
+Daily Check Looks Ahead (days),Le contrôle quotidien porte sur (jours)
+Default Driver,Chauffeur par défaut
+Default Vehicle,Véhicule par défaut
+Direction,Sens
+Driver unavailable: {0},Chauffeur indisponible : {0}
+Driver {0} has left on {1}.,Le chauffeur {0} a quitté l'entreprise le {1}.
+Driver {0} is already on {1} ({2}).,Le chauffeur {0} est déjà sur {1} ({2}).
+Driver {0} is not active ({1}).,Le chauffeur {0} n'est pas actif ({1}).
+Driver {0} is on approved leave on {1}.,Le chauffeur {0} est en congé approuvé le {1}.
+Driver {0} unavailable: {1}. Please reassign.,Chauffeur {0} indisponible : {1}. Merci de réaffecter.
+Driver {0}'s licence expired on {1}.,Le permis du chauffeur {0} a expiré le {1}.
+Driver {0}'s medical check was due on {1}.,La visite médicale du chauffeur {0} était due le {1}.
+"Drivers, vehicles & setup","Chauffeurs, véhicules et paramétrage"
+Drop-off Address,Adresse de dépose
+End time must be after start time.,L'heure de fin doit être après l'heure de début.
+Ends At,Se termine à
+Failed: {0},Échec : {0}
+Fewer runs than required,Moins de trajets que requis
+Fri,Ven
+From Date,Date de début
+From School,Retour (depuis l'école)
+Generate Tours For (days ahead),Générer les tournées pour (jours à l'avance)
+Generate Tours Now,Générer les tournées maintenant
+Guardians,Responsables légaux
+Home Address,Adresse du domicile
+Include Warnings,Inclure les avertissements
+Is Driver,Est chauffeur
+Last Medical Check,Dernière visite médicale
+Leave empty to use the school's holidays,Laisser vide pour utiliser les vacances de l'école
+Licence Valid Until,Permis valable jusqu'au
+Mon,Lun
+Needs Attention,À traiter
+Needs Wheelchair-Accessible Vehicle,Nécessite un véhicule accessible en fauteuil roulant
+Next Medical Check,Prochaine visite médicale
+Next Technical Inspection,Prochain contrôle technique
+No Driver,Sans chauffeur
+No Required Trips entered. Without them the system can't tell when {0} is missing from a tour.,"Aucun trajet requis saisi. Sans eux, le système ne peut pas détecter quand {0} manque sur une tournée."
+No driver assigned.,Aucun chauffeur affecté.
+No driver run planned,Aucun trajet prévu
+No passengers on this tour.,Aucun passager sur cette tournée.
+No required trips entered on the passenger,Aucun trajet requis saisi pour ce passager
+No vehicle assigned.,Aucun véhicule affecté.
+One row per trip the passenger needs. A child who goes home at noon and back at 13:30 has two To School and two From School rows for that day. This is what the Passengers Without Transport check compares against.,Une ligne par trajet dont le passager a besoin. Un enfant qui rentre à midi et revient à 13h30 a deux lignes Aller et deux lignes Retour ce jour-là. C'est la référence du contrôle Passagers sans transport.
+Passenger,Passager
+Passenger Guardian,Responsable du passager
+Passenger Schedule,Trajet requis du passager
+Passenger Seats,Places passagers
+Passengers,Passagers
+Passengers Without Transport,Passagers sans transport
+Passengers affected,Passagers concernés
+Passengers not on any tour,Passagers sur aucune tournée
+Photo,Photo
+Picked Up,Pris en charge
+Pickup Address,Adresse de prise en charge
+Pickup Time,Heure de prise en charge
+Problems Found,Problèmes détectés
+Reassign {0} tour(s): {1} unavailable,Réaffecter {0} tournée(s) : {1} indisponible
+Relation,Lien
+Reload Passengers from Template,Recharger les passagers du modèle
+Required,Requis
+Required Trips,Trajets requis
+Row {0}: {1} is already on this tour.,Ligne {0} : {1} est déjà sur cette tournée.
+Runs On,Circule le
+Sat,Sam
+School,École
+School Holidays,Vacances scolaires
+School Name,Nom de l'école
+School holidays. Tours and coverage checks skip these days.,Vacances scolaires. Les tournées et les contrôles ignorent ces jours.
+Send Email Even When Everything Is Covered,Envoyer l'e-mail même quand tout est couvert
+Set the date first.,Indiquez d'abord la date.
+Start Time,Heure de début
+Start/End Times,Heures de début/fin
+Starts At,Commence à
+Sun,Dim
+This tour can't be saved as is,Cette tournée ne peut pas être enregistrée en l'état
+Thu,Jeu
+Tick at least one weekday.,Cochez au moins un jour de la semaine.
+To Date,Date de fin
+To School,Aller (vers l'école)
+Tour,Tournée
+Tour Name,Nom de la tournée
+Tour Passenger,Passager de la tournée
+Tour Template,Modèle de tournée
+Tour Template Passenger,Passager du modèle de tournée
+Tour {0} already exists for {1} on {2}.,La tournée {0} existe déjà pour {1} le {2}.
+Tours,Tournées
+Tours needing attention,Tournées à traiter
+Tours with problems,Tournées avec problèmes
+Transport,Transport
+Transport Dispatcher,Planificateur transport
+Transport Driver,Chauffeur transport
+Transport End,Fin du transport
+Transport End is before Transport Start.,La fin du transport est antérieure au début.
+Transport School,École (transport)
+Transport Settings,Paramètres transport
+Transport Start,Début du transport
+Transport: everything covered ({0}),Transport : tout est couvert ({0})
+Transport: {0} tour(s) and {1} passenger-day(s) need attention ({2}),Transport : {0} tournée(s) et {1} jour(s)-passager à traiter ({2})
+Tue,Mar
+Uncovered Tours,Tournées non couvertes
+Update planned tours,Mettre à jour les tournées prévues
+Used when neither the tour template nor the school has one,Utilisée si ni le modèle de tournée ni l'école n'en ont une
+Valid To,Valide jusqu'au
+Valid To is before Valid From.,La date de fin de validité est antérieure à la date de début.
+Vehicle {0} is already on {1} ({2}).,Le véhicule {0} est déjà sur {1} ({2}).
+Vehicle {0}'s inspection was due on {1}.,Le contrôle technique du véhicule {0} était dû le {1}.
+Vehicle {0}'s insurance ended on {1}.,L'assurance du véhicule {0} a expiré le {1}.
+View Tours,Voir les tournées
+Wed,Mer
+Wheelchair Accessible,Accessible fauteuil roulant
+"Who receives the invoices (family, commune, institution)","Qui reçoit les factures (famille, commune, établissement)"
+e.g. Morning run – École Jean Jaurès,ex. Tournée du matin – École Jean Jaurès
+error,erreur
+gap,non couvert
+leave {0} – {1},congé du {0} au {1}
+leaving on {0},départ le {0}
+status changed to {0},statut passé à {0}
+warning,avertissement
+{0} is already on {1} ({2}).,{0} est déjà sur {1} ({2}).
+{0} is listed {1} times on this tour.,{0} figure {1} fois sur cette tournée.
+{0} is unavailable ({1}). These planned tours need another driver:,{0} est indisponible ({1}). Ces tournées prévues ont besoin d'un autre chauffeur :
+{0} need a wheelchair-accessible vehicle; {1} is not.,{0} ont besoin d'un véhicule accessible en fauteuil roulant ; {1} ne l'est pas.
+{0} needs a wheelchair-accessible vehicle; {1} is not.,{0} a besoin d'un véhicule accessible en fauteuil roulant ; {1} ne l'est pas.
+{0} passengers but vehicle {1} has {2} seats.,{0} passagers mais le véhicule {1} a {2} places.
+{0} passengers but {1} has {2} seats. Days where everyone rides will be flagged.,{0} passagers mais {1} a {2} places. Les jours où tous voyagent seront signalés.
+{0} planned tour(s) updated.,{0} tournée(s) prévue(s) mise(s) à jour.
+"{0} tour(s) created, {1} updated.","{0} tournée(s) créée(s), {1} mise(s) à jour."
+{0}'s contract does not cover {1}.,Le contrat de {0} ne couvre pas le {1}.

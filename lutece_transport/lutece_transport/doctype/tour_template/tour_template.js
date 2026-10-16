@@ -19,7 +19,7 @@ frappe.ui.form.on("Tour Template", {
 		frm.add_custom_button(__("Apply Driver/Vehicle/Times to Future Tours"), () => {
 			frappe.prompt(
 				[
-					{ fieldname: "from_date", fieldtype: "Date", label: __("From"), default: frappe.datetime.get_today(), reqd: 1 },
+					{ fieldname: "from_date", fieldtype: "Date", label: __("From Date"), default: frappe.datetime.get_today(), reqd: 1 },
 					{ fieldname: "driver", fieldtype: "Check", label: __("Driver"), default: 1 },
 					{ fieldname: "vehicle", fieldtype: "Check", label: __("Vehicle"), default: 1 },
 					{ fieldname: "times", fieldtype: "Check", label: __("Start/End Times"), default: 1 },

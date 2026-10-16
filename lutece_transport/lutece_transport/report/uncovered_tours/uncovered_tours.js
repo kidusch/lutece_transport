@@ -1,7 +1,7 @@
 frappe.query_reports["Uncovered Tours"] = {
 	filters: [
-		{ fieldname: "from_date", label: __("From"), fieldtype: "Date", default: frappe.datetime.get_today(), reqd: 1 },
-		{ fieldname: "to_date", label: __("To"), fieldtype: "Date", default: frappe.datetime.add_days(frappe.datetime.get_today(), 7), reqd: 1 },
+		{ fieldname: "from_date", label: __("From Date"), fieldtype: "Date", default: frappe.datetime.get_today(), reqd: 1 },
+		{ fieldname: "to_date", label: __("To Date"), fieldtype: "Date", default: frappe.datetime.add_days(frappe.datetime.get_today(), 7), reqd: 1 },
 		{ fieldname: "include_warnings", label: __("Include Warnings"), fieldtype: "Check" },
 	],
 	formatter(value, row, column, data, default_formatter) {

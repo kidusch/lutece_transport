@@ -1,9 +1,11 @@
 """Frappe glue: load ERPNext/HRMS data and run the rules in logic.py."""
 
 from collections import Counter
+from datetime import date
 
 import frappe
-from frappe.utils import add_days, getdate, nowdate
+from frappe import _
+from frappe.utils import add_days, format_date, getdate, nowdate
 
 from lutece_transport import logic as L
 
@@ -149,8 +151,14 @@ def check_tour(doc):
     return L.tour_issues(t, ctx)
 
 
+def issue_text(issue):
+    """The issue in the user's language, with dates in their date format."""
+    args = [format_date(a) if isinstance(a, date) else a for a in issue.args]
+    return _(issue.template).format(*args)
+
+
 def format_issues(issues):
-    return "\n".join(f"• {i.message}" for i in issues)
+    return "\n".join(f"• {issue_text(i)}" for i in issues)
 
 
 # ---------------------------------------------------------------- reports
@@ -178,7 +186,7 @@ def uncovered_tours(from_date=None, to_date=None, include_warnings=False):
                     "direction": doc.direction, "start_time": L.fmt_time(doc.start_time),
                     "driver": doc.driver, "driver_name": doc.driver_name, "vehicle": doc.vehicle,
                     "passengers": sum(1 for p in doc.passengers if p.status not in L.SEATLESS_STATUSES),
-                    "level": issue.level, "issue": issue.message,
+                    "level": issue.level, "issue": issue_text(issue),
                 })
     return out
 
@@ -222,7 +230,7 @@ def passengers_without_transport(from_date=None, to_date=None):
         if not rows:
             out.append({"passenger": p.name, "passenger_name": p.full_name, "school": p.school,
                         "date": None, "direction": None, "expected": None, "planned": None, "missing": None,
-                        "note": "No required trips entered on the passenger"})
+                        "note": _("No required trips entered on the passenger")})
             continue
         hl = resolve_holiday_list(None, p.school)
         if hl not in holiday_cache:
@@ -231,7 +239,7 @@ def passengers_without_transport(from_date=None, to_date=None):
         mine = Counter({(d, direction): n for (pid, d, direction), n in actual.items() if pid == p.name})
         for m in L.missing_trips(expected, mine):
             out.append({"passenger": p.name, "passenger_name": p.full_name, "school": p.school,
-                        "note": "No driver run planned" if m["planned"] == 0 else "Fewer runs than required",
+                        "note": _("No driver run planned") if m["planned"] == 0 else _("Fewer runs than required"),
                         **m})
     out.sort(key=lambda r: (r["date"] or getdate("1900-01-01"), r["passenger_name"] or ""))
     return out

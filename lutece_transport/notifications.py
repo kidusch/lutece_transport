@@ -1,6 +1,7 @@
 """Daily coverage email and alerts when a driver becomes unavailable."""
 
 import frappe
+from frappe import _
 from frappe.utils import add_days, escape_html, format_date, get_url_to_form, getdate, nowdate
 
 from lutece_transport.coverage import passengers_without_transport, refresh_issue_flags, uncovered_tours
@@ -43,11 +44,11 @@ def send_daily_digest():
 
 	period = f"{format_date(start)} – {format_date(end)}"
 	if not tours and not passengers:
-		subject = f"Transport: everything covered ({period})"
-		body = f"<p>All planned tours have a driver and a vehicle, and every passenger is on a tour, for {period}.</p>"
+		subject = _("Transport: everything covered ({0})").format(period)
+		body = "<p>" + _("All planned tours have a driver and a vehicle, and every passenger is on a tour, for {0}.").format(period) + "</p>"
 	else:
-		subject = (f"Transport: {len({t['tour'] for t in tours})} tour(s) and "
-				   f"{len({(p['passenger'], p['date']) for p in passengers})} passenger-day(s) need attention ({period})")
+		subject = _("Transport: {0} tour(s) and {1} passenger-day(s) need attention ({2})").format(
+			len({t["tour"] for t in tours}), len({(p["passenger"], p["date"]) for p in passengers}), period)
 		body = _digest_html(tours, passengers, period)
 
 	_send(recipients=recipients, subject=subject, message=body, reference_doctype="Transport Settings",
@@ -55,23 +56,23 @@ def send_daily_digest():
 
 
 def _digest_html(tours, passengers, period):
-	parts = [f"<p>Coverage check for {period}.</p>"]
+	parts = ["<p>" + _("Coverage check for {0}.").format(period) + "</p>"]
 	if tours:
-		parts.append("<h3>Tours with problems</h3><ul>")
+		parts.append("<h3>" + _("Tours with problems") + "</h3><ul>")
 		for t in tours:
 			link = f'<a href="{get_url_to_form("Tour", t["tour"])}">{t["tour"]}</a>'
 			parts.append(
 				f"<li><b>{format_date(t['tour_date'])} {t['start_time']}</b> – "
-				f"{escape_html(t['tour_template'] or t['direction'] or '')} ({link}): {escape_html(t['issue'])}</li>"
+				f"{escape_html(t['tour_template'] or _(t['direction'] or ''))} ({link}): {escape_html(t['issue'])}</li>"
 			)
 		parts.append("</ul>")
 	if passengers:
-		parts.append("<h3>Passengers not on any tour</h3><ul>")
+		parts.append("<h3>" + _("Passengers not on any tour") + "</h3><ul>")
 		for p in passengers:
-			when = f"{format_date(p['date'])} {p['direction']}" if p.get("date") else ""
+			when = f"{format_date(p['date'])} {_(p['direction'])}" if p.get("date") else ""
 			link = f'<a href="{get_url_to_form("Passenger", p["passenger"])}">{escape_html(p["passenger_name"] or p["passenger"])}</a>'
 			parts.append(f"<li>{link} {when}: {escape_html(p['note'])}"
-						 + (f" ({p['planned']} of {p['expected']})" if p.get("expected") else "") + "</li>")
+						 + (" (" + _("{0} of {1}").format(p["planned"], p["expected"]) + ")" if p.get("expected") else "") + "</li>")
 		parts.append("</ul>")
 	return "".join(parts)
 
@@ -85,9 +86,9 @@ def _alert_for_tours(employee, employee_name, reason, filters):
 		return
 	for t in tours:
 		doc = frappe.get_doc("Tour", t.name)
-		doc.add_comment("Comment", f"Driver {employee_name} unavailable: {reason}. Please reassign.")
+		doc.add_comment("Comment", _("Driver {0} unavailable: {1}. Please reassign.").format(employee_name, reason))
 		doc.db_set({"has_issues": 1,
-					"coverage_issues": ((doc.coverage_issues or "") + f"\n• Driver unavailable: {reason}").strip()},
+					"coverage_issues": ((doc.coverage_issues or "") + "\n• " + _("Driver unavailable: {0}").format(reason)).strip()},
 				   update_modified=False)
 
 	recipients = dispatcher_emails()
@@ -99,9 +100,9 @@ def _alert_for_tours(employee, employee_name, reason, filters):
 		)
 		_send(
 			recipients=recipients,
-			subject=f"Reassign {len(tours)} tour(s): {employee_name} unavailable",
-			message=f"<p>{escape_html(employee_name)} is unavailable ({escape_html(reason)}). "
-					f"These planned tours need another driver:</p><ul>{items}</ul>",
+			subject=_("Reassign {0} tour(s): {1} unavailable").format(len(tours), employee_name),
+			message="<p>" + _("{0} is unavailable ({1}). These planned tours need another driver:").format(
+				escape_html(employee_name), escape_html(reason)) + f"</p><ul>{items}</ul>",
 		)
 
 
@@ -109,7 +110,7 @@ def on_leave_approved(doc, method=None):
 	if doc.docstatus != 1 or doc.status != "Approved":
 		return
 	_alert_for_tours(doc.employee, doc.employee_name or doc.employee,
-					 f"leave {format_date(doc.from_date)} – {format_date(doc.to_date)}",
+					 _("leave {0} – {1}").format(format_date(doc.from_date), format_date(doc.to_date)),
 					 {"tour_date": ["between", [doc.from_date, doc.to_date]]})
 
 
@@ -120,8 +121,8 @@ def on_employee_update(doc, method=None):
 	became_inactive = before.status == "Active" and doc.status != "Active"
 	new_relieving = doc.relieving_date and doc.relieving_date != before.relieving_date
 	if became_inactive:
-		_alert_for_tours(doc.name, doc.employee_name, f"status changed to {doc.status}",
+		_alert_for_tours(doc.name, doc.employee_name, _("status changed to {0}").format(_(doc.status)),
 						 {"tour_date": [">=", nowdate()]})
 	elif new_relieving:
-		_alert_for_tours(doc.name, doc.employee_name, f"leaving on {format_date(doc.relieving_date)}",
+		_alert_for_tours(doc.name, doc.employee_name, _("leaving on {0}").format(format_date(doc.relieving_date)),
 						 {"tour_date": [">=", doc.relieving_date]})

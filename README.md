@@ -74,6 +74,11 @@ Frappe app that brings the Lutece transport system into ERPNext/HRMS. Its main j
 - Payslip → HRMS Salary Slip
 - ROLE_ADMIN / ROLE_SECRETORY → Transport Dispatcher; ROLE_DRIVER → Transport Driver
 
+## Language
+
+- French translation in `lutece_transport/translations/fr.csv`; each user sees French when their language is set to Français.
+- Check messages are built as translatable templates in `logic.py` and translated in `coverage.issue_text`.
+
 ## Tests
 
 The assignment and coverage rules live in `lutece_transport/logic.py` with no Frappe dependency. Run `python -m pytest`.
